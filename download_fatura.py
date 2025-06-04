@@ -29,7 +29,11 @@ wait_driver = WebDriverWait(driver, 10)
 driver.get("https://nfe-web.portoalegre.rs.gov.br/nfse/")
 
 if driver.find_element(By.CSS_SELECTOR, ".modal.open"):
-    driver.find_element(By.CSS_SELECTOR, ".modal-close.modal-exit").click()
+    close_button = wait_driver.until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, ".modal-close.modal-exit"))
+    )
+    driver.execute_script("arguments[0].click();", close_button)
+
     wait_driver.until(
         EC.element_to_be_clickable(
             (
